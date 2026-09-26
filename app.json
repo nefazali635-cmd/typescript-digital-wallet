@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "b58520e6-de22-48a9-a6af-ad18e6db4d62"
+      }
+    },
+    "android": {
+      "package": "com.nefazkhan.workspace"
+    },
+    "sdkVersion": "48.0.0"
+  }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NZ Wallet</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+    .wallet-card { background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC); padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .header { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+    .balance-title { font-size: 14px; opacity: 0.8; margin-top: 20px; }
+    .balance-amount { font-size: 36px; font-weight: bold; margin: 5px 0 20px; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    button { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .btn-deposit { background: #00e676; color: #000; }
+    .btn-withdraw { background: #ff5252; color: #fff; }
+    .history-card { background: #1e1e1e; padding: 20px; border-radius: 20px; width: 100%; max-width: 380px; margin-top: 15px; }
+    .history-title { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+    .history-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+    .history-item { padding: 8px 0; border-bottom: 1px solid #333; font-size: 14px; display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+
+  <div>
+    <div class="wallet-card">
+      <div class="header">
+        <div class="logo">NZ WALLET</div>
+        <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 10px;">SECURE</span>
+      </div>
+      <div class="balance-title">Available Balance</div>
+      <div class="balance-amount" id="balance">$1,000.00</div>
+      
+      <div class="actions">
+        <button class="btn-deposit" onclick="deposit()">+ Deposit</button>
+        <button class="btn-withdraw" onclick="withdraw()">- Withdraw</button>
+      </div>
+    </div>
+
+    <div class="history-card">
+      <div class="history-title">Transaction History</div>
+      <ul class="history-list" id="history">
+        <li class="history-item"><span>Wallet Activated</span> <span>+$1000</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let currentBalance = 1000;
+
+    function updateUI() {
+      document.getElementById('balance').innerText = `$${currentBalance.toFixed(2)}`;
+    }
+
+    function deposit() {
+      let amount = prompt("Enter deposit amount:");
+      if (amount && !isNaN(amount) && Number(amount) > 0) {
+        currentBalance += Number(amount);
+        addHistory(`Deposited`, `+$${amount}`);
+        updateUI();
+      }
+    }
+
+    function withdraw() {
+      let amount = prompt("Enter withdrawal amount:");
+      if (amount && !isNaN(amount) && Number(amount) > 0) {
+        if (Number(amount) <= currentBalance) {
+          currentBalance -= Number(amount);
+          addHistory(`Withdrew`, `-$${amount}`);
+          updateUI();
+        } else {
+          alert("Insufficient Balance!");
+        }
+      }
+    }
+
+    function addHistory(type, amount) {
+      let list = document.getElementById('history');
+      let li = document.createElement('li');
+      li.className = 'history-item';
+      li.innerHTML = `<span>${type}</span> <span>${amount}</span>`;
+      list.prepend(li);
+    }
+  </script>
+</body>
+</html>
+
