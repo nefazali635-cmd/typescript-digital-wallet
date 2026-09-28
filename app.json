@@ -1,13 +1,22 @@
 {
   "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "b58520e6-de22-48a9-a6af-ad18e6db4d62"
-      }
+    "name": "typescript-digital-wallet",
+    "slug": "typescript-digital-wallet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "android": {
-      "package": "com.nefazkhan.workspace"
+      "package": "com.nefazali.typescriptdigitalwallet"
     },
-    "sdkVersion": "48.0.0"
+    "extra": {
+      "eas": {
+        "projectId": "93637be7-2681-4f08-990d-148ab08da9b"
+      }
+    }
   }
 }
+
