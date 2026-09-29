@@ -28,16 +28,19 @@ export default function App() {
         <View style={styles.header}>
           <View>
             <Text style={styles.greetingText}>Welcome Back 👋</Text>
-            <Text style={styles.userNameText}>Digital Wallet User</Text>
+            <Text style={styles.userNameText}>ZN WALLET</Text>
           </View>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>W</Text>
+            <Text style={styles.avatarText}>Z</Text>
           </View>
         </View>
 
         {/* Balance Card */}
         <View style={styles.balanceCard}>
-          <Text style={styles.cardLabel}>Total Balance</Text>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardLabel}>Total Balance</Text>
+            <Text style={styles.cardBrand}>ZN WALLET</Text>
+          </View>
           <Text style={styles.cardBalance}>${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</Text>
           <View style={styles.cardFooter}>
             <Text style={styles.cardNumber}>**** **** **** 8824</Text>
@@ -128,9 +131,10 @@ const styles = StyleSheet.create({
     color: '#6c757d',
   },
   userNameText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#1e1e2d',
+    letterSpacing: 0.5,
   },
   avatar: {
     width: 45,
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
   avatarText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
   },
   balanceCard: {
     backgroundColor: '#1e1e2d',
@@ -152,9 +156,20 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     elevation: 5,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   cardLabel: {
     color: '#a0a5ba',
     fontSize: 14,
+  },
+  cardBrand: {
+    color: '#6366f1',
+    fontWeight: 'bold',
+    fontSize: 12,
+    letterSpacing: 1,
   },
   cardBalance: {
     color: '#ffffff',
