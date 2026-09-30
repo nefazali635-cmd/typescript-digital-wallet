@@ -1,275 +1,146 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  StatusBar,
+import React from 'react';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  SafeAreaView, 
+  TouchableOpacity, 
+  ScrollView, 
+  Alert 
 } from 'react-native';
 
 export default function App() {
-  const [balance, setBalance] = useState(2450.00);
-
-  const transactions = [
-    { id: '1', name: 'Ali Nifaz', type: 'Received', amount: '+$350.00', date: 'Today, 2:30 PM', isCredit: true },
-    { id: '2', name: 'Supermarket', type: 'Shopping', amount: '-$42.50', date: 'Yesterday, 8:15 PM', isCredit: false },
-    { id: '3', name: 'Mobile Recharge', type: 'Utility', amount: '-$15.00', date: '28 Sep 2026', isCredit: false },
-    { id: '4', name: 'Salary Credit', type: 'Deposit', amount: '+$2,100.00', date: '25 Sep 2026', isCredit: true },
-  ];
+  // Button click hone par alert popup dikhane ka function
+  const handlePress = (actionName) => {
+    Alert.alert("Button Pressed", `${actionName} button par touch hua hai!`);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#1e1e2d" />
-      
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greetingText}>Welcome Back 👋</Text>
-            <Text style={styles.userNameText}>ZN WALLET</Text>
+            <Text style={styles.welcomeText}>Welcome Back 👋</Text>
+            <Text style={styles.title}>ZN WALLET</Text>
           </View>
-          <View style={styles.avatar}>
+          <TouchableOpacity style={styles.avatar} onPress={() => handlePress("Profile")}>
             <Text style={styles.avatarText}>Z</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
-        {/* Balance Card */}
-        <View style={styles.balanceCard}>
+        {/* Card View */}
+        <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.cardLabel}>Total Balance</Text>
             <Text style={styles.cardBrand}>ZN WALLET</Text>
           </View>
-          <Text style={styles.cardBalance}>${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</Text>
+          <Text style={styles.balance}>$2,450.00</Text>
           <View style={styles.cardFooter}>
             <Text style={styles.cardNumber}>**** **** **** 8824</Text>
             <Text style={styles.cardType}>VISA</Text>
           </View>
         </View>
 
-        {/* Quick Actions */}
+        {/* Quick Actions (Touchable Buttons) */}
         <Text style={styles.sectionTitle}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          <TouchableOpacity style={styles.actionBtn}>
-            <View style={[styles.iconBox, { backgroundColor: '#e3f2fd' }]}>
-              <Text style={styles.actionIcon}>⬆️</Text>
+        <View style={styles.actionsContainer}>
+          
+          <TouchableOpacity style={styles.actionBtn} onPress={() => handlePress("Send")}>
+            <View style={[styles.iconBox, { backgroundColor: '#E3F2FD' }]}>
+              <Text style={styles.icon}>⬆️</Text>
             </View>
-            <Text style={styles.actionText}>Send</Text>
+            <Text style={styles.actionLabel}>Send</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionBtn}>
-            <View style={[styles.iconBox, { backgroundColor: '#e8f5e9' }]}>
-              <Text style={styles.actionIcon}>⬇️</Text>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => handlePress("Receive")}>
+            <View style={[styles.iconBox, { backgroundColor: '#E8F5E9' }]}>
+              <Text style={styles.icon}>⬇️</Text>
             </View>
-            <Text style={styles.actionText}>Receive</Text>
+            <Text style={styles.actionLabel}>Receive</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionBtn}>
-            <View style={[styles.iconBox, { backgroundColor: '#fff3e0' }]}>
-              <Text style={styles.actionIcon}>💳</Text>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => handlePress("Pay Bill")}>
+            <View style={[styles.iconBox, { backgroundColor: '#FFF3E0' }]}>
+              <Text style={styles.icon}>💳</Text>
             </View>
-            <Text style={styles.actionText}>Pay Bill</Text>
+            <Text style={styles.actionLabel}>Pay Bill</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionBtn}>
-            <View style={[styles.iconBox, { backgroundColor: '#f3e5f5' }]}>
-              <Text style={styles.actionIcon}>➕</Text>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => handlePress("Add Funds")}>
+            <View style={[styles.iconBox, { backgroundColor: '#F3E5F5' }]}>
+              <Text style={styles.icon}>➕</Text>
             </View>
-            <Text style={styles.actionText}>Add Funds</Text>
+            <Text style={styles.actionLabel}>Add Funds</Text>
           </TouchableOpacity>
+
         </View>
 
-        {/* Recent Transactions */}
-        <View style={styles.txHeader}>
+        {/* Recent Transactions Header */}
+        <View style={styles.transactionHeader}>
           <Text style={styles.sectionTitle}>Recent Transactions</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAllText}>See All</Text>
+          <TouchableOpacity onPress={() => handlePress("See All")}>
+            <Text style={styles.seeAll}>See All</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.txList}>
-          {transactions.map((tx) => (
-            <View key={tx.id} style={styles.txItem}>
-              <View style={styles.txLeft}>
-                <View style={styles.txIconContainer}>
-                  <Text style={{ fontSize: 18 }}>{tx.isCredit ? '📥' : '📤'}</Text>
-                </View>
-                <View>
-                  <Text style={styles.txName}>{tx.name}</Text>
-                  <Text style={styles.txDate}>{tx.date}</Text>
-                </View>
-              </View>
-              <Text style={[styles.txAmount, { color: tx.isCredit ? '#2e7d32' : '#c62828' }]}>
-                {tx.amount}
-              </Text>
+        {/* Transactions List */}
+        <View style={styles.transactionCard}>
+          <View style={styles.transItem}>
+            <Text style={styles.transIcon}>📥</Text>
+            <View style={styles.transDetails}>
+              <Text style={styles.transName}>Ali Nifaz</Text>
+              <Text style={styles.transDate}>Today, 2:30 PM</Text>
             </View>
-          ))}
+            <Text style={[styles.transAmount, { color: '#2e7d32' }]}>+$350.00</Text>
+          </View>
+
+          <View style={styles.transItem}>
+            <Text style={styles.transIcon}>📤</Text>
+            <View style={styles.transDetails}>
+              <Text style={styles.transName}>Supermarket</Text>
+              <Text style={styles.transDate}>Yesterday, 8:15 PM</Text>
+            </View>
+            <Text style={[styles.transAmount, { color: '#d32f2f' }]}>-$42.50</Text>
+          </View>
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f7fb',
-  },
-  scrollContainer: {
-    padding: 20,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  greetingText: {
-    fontSize: 14,
-    color: '#6c757d',
-  },
-  userNameText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#1e1e2d',
-    letterSpacing: 0.5,
-  },
-  avatar: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
-    backgroundColor: '#4f46e5',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  balanceCard: {
-    backgroundColor: '#1e1e2d',
-    borderRadius: 20,
-    padding: 24,
-    marginBottom: 25,
-    elevation: 5,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  cardLabel: {
-    color: '#a0a5ba',
-    fontSize: 14,
-  },
-  cardBrand: {
-    color: '#6366f1',
-    fontWeight: 'bold',
-    fontSize: 12,
-    letterSpacing: 1,
-  },
-  cardBalance: {
-    color: '#ffffff',
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginVertical: 12,
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  cardNumber: {
-    color: '#a0a5ba',
-    fontSize: 14,
-  },
-  cardType: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1e1e2d',
-    marginBottom: 15,
-  },
-  actionsGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 25,
-  },
-  actionBtn: {
-    alignItems: 'center',
-    width: '22%',
-  },
-  iconBox: {
-    width: 55,
-    height: 55,
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  actionIcon: {
-    fontSize: 22,
-  },
-  actionText: {
-    fontSize: 12,
-    color: '#4b5563',
-    fontWeight: '600',
-  },
-  txHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  seeAllText: {
-    color: '#4f46e5',
-    fontWeight: '600',
-  },
-  txList: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-  },
-  txItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
-  },
-  txLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  txIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: '#f3f4f6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  txName: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#1e1e2d',
-  },
-  txDate: {
-    fontSize: 12,
-    color: '#9ca3af',
-    marginTop: 2,
-  },
-  txAmount: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
+  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  scrollContent: { padding: 20 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  welcomeText: { fontSize: 14, color: '#6C757D' },
+  title: { fontSize: 22, fontWeight: 'bold', color: '#1A1A1A' },
+  avatar: { width: 45, height: 45, borderRadius: 25, backgroundColor: '#5E35B1', justifyContent: 'center', alignItems: 'center' },
+  avatarText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' },
+  card: { backgroundColor: '#1E1E2C', borderRadius: 16, padding: 20, marginBottom: 25 },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between' },
+  cardLabel: { color: '#A0A0A0', fontSize: 12 },
+  cardBrand: { color: '#7986CB', fontWeight: 'bold' },
+  balance: { color: '#FFF', fontSize: 28, fontWeight: 'bold', marginVertical: 15 },
+  cardFooter: { flexDirection: 'row', justifyContent: 'space-between' },
+  cardNumber: { color: '#A0A0A0' },
+  cardType: { color: '#FFF', fontWeight: 'bold' },
+  sectionTitle: { fontSize: 18, fontWeight: 'bold', color: '#1A1A1A', marginBottom: 15 },
+  actionsContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 25 },
+  actionBtn: { alignItems: 'center', width: '22%' },
+  iconBox: { width: 55, height: 55, borderRadius: 16, justifyContent: 'center', alignItems: 'center', marginBottom: 8 },
+  icon: { fontSize: 20 },
+  actionLabel: { fontSize: 12, fontWeight: '500', color: '#333' },
+  transactionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  seeAll: { color: '#5E35B1', fontWeight: '600' },
+  transactionCard: { backgroundColor: '#FFF', borderRadius: 16, padding: 15 },
+  transItem: { flexDirection: 'row', alignItems: 'center', marginVertical: 10 },
+  transIcon: { fontSize: 22, marginRight: 12 },
+  transDetails: { flex: 1 },
+  transName: { fontSize: 15, fontWeight: '600', color: '#1A1A1A' },
+  transDate: { fontSize: 12, color: '#888' },
+  transAmount: { fontSize: 15, fontWeight: 'bold' },
 });
+
